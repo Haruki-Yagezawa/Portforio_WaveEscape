@@ -42,6 +42,9 @@ namespace PlayerAccountSystems
 
             if (_isSuccess)
             {
+                // 文字がフォーマットにあっていない場合異常終了
+                if (_nameText.text.Length < 3) return "";
+
                 // 名前登録ボタンを押していたらその名前を返す
                 return _nameText.text;
             }

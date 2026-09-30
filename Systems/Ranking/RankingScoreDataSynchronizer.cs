@@ -19,13 +19,13 @@ namespace Ranking
         /// </summary>
         /// <param name="gameRuleData"></param>
         /// <returns></returns>
-        public async UniTask OnSyncRankingDataAsync(GameRulesDataScriptableObject gameRuleData)
+        public async UniTask<bool> OnSyncRankingDataAsync(GameRulesDataScriptableObject gameRuleData)
         {
             // Nullチェック
             if (gameRuleData == null)
             {
                 Debug.LogError("GameRulesDataScriptableObject が null です。");
-                return;
+                return false;
             }
 
 
@@ -33,12 +33,13 @@ namespace Ranking
             if (!rankingDatas.isSuccess)
             {
                 Debug.LogWarning ("ランキングデータの取得に失敗しました");
-                return;
+                return false;
             }
 
             int[] intArray = Array.ConvertAll(rankingDatas.scores, score => (int)score);
 
             _rankingScoreData.OnReset(intArray);
+            return true;
         }
     }
 }

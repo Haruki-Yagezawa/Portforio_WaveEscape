@@ -43,7 +43,7 @@ namespace PlayerAccountSystems
 
         //===============================================
         /// <summary>
-        /// IDを作成
+        /// IDを作るためのユーザーネーム入力
         /// </summary>
         /// <returns></returns>
         private async UniTask<bool> OnMakeIDAsync()
