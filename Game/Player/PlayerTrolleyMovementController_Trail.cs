@@ -34,7 +34,7 @@ namespace Player
 
         internal protected override void OnExit() 
         {
-            CheckNotHitObstacleAsync();
+            CheckNotHitObstacleAsync().Forget();
             ExitTransformPosition();
             ResetData();
         }
@@ -52,7 +52,7 @@ namespace Player
         // スピードブーストをくぐった回数を保存しておく変数
         private int _speedBoostCount = 0;
         private const int SPEED_BOOST_SUCCESS_COUNT = 2;
-        private const int SPEED_BOOST_SUCCESS_COUNT_SPECIAL = 7;
+        private const int SPEED_BOOST_SUCCESS_COUNT_SPECIAL = 3;
 
         // 成功時の追加スピード
         private const int ADD_SPEED_ADD_SUCCESS_CURVE_HARF = 2;
@@ -112,7 +112,7 @@ namespace Player
             _isNotHitObstacleOnCurve = false;
         }
         // 無傷でカーブを曲がり切ってたらスピードボーナス
-        private async void CheckNotHitObstacleAsync()
+        private async UniTaskVoid CheckNotHitObstacleAsync()
         {
             // 区画内でミスをしていたら終了
             if (!_isNotHitObstacleOnCurve) return;
@@ -154,7 +154,7 @@ namespace Player
             }
 
             // カーブ成功演出
-            Owner.GetGameManager.OnSpeedUpEffectEvent.Invoke();
+            Owner.GetGameManager.SpeedUpEffect();
         }
 
         // ブーストしたときに読み込まれる関数
@@ -184,7 +184,7 @@ namespace Player
             }
 
             // カーブ成功演出
-            Owner.GetGameManager.OnSpeedUpEffectEvent.Invoke();
+            Owner.GetGameManager.SpeedUpEffect();
         }
 
 

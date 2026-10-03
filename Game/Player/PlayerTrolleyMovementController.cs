@@ -4,7 +4,6 @@ using Stage;
 using Stage.Fall;
 using StateMachine;
 using UnityEngine;
-using UnityEngine.Splines;
 
 namespace Player
 {
@@ -76,7 +75,7 @@ namespace Player
         /// ステージルームのコライダーにあたった場合の処理
         /// </summary>
         /// <param name="stageStatus"></param>
-        public async void OnTriggerStageRoomAsync(StageRoomElementStatusBase stageStatus)
+        public async UniTaskVoid OnTriggerStageRoomAsync(StageRoomElementStatusBase stageStatus)
         {
             StageRoomElementRoadStatus roadStatus = stageStatus.GetComponent<StageRoomElementRoadStatus>();
 
