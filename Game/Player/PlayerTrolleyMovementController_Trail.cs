@@ -2,7 +2,6 @@ using Cysharp.Threading.Tasks;
 using Unity.Mathematics;
 using UnityEngine;
 using UnityEngine.Splines;
-using static UnityEngine.UI.GridLayoutGroup;
 using StateBase = StateMachine.StateMachine<Player.PlayerTrolleyMovementController>.StateBase;
 
 namespace Player
@@ -66,7 +65,7 @@ namespace Player
             Owner.GetSpeedManager.OnMissMove += OnMiss;
 
             Owner.GetSpeedManager.OnSpeedBoost += OnSpeedBoost;
-            Owner.GetGameManager.OnEndProgressEvent += CheckHitBoostBoadAsync;
+            Owner.GetGameManager.OnEndProgressEvent += CheckHitBoostBoad;
         }
 
         // 状態が変化して開始するときに変数を初期化する関数
@@ -164,14 +163,18 @@ namespace Player
         }
         // プログレス（落下部屋など）が終了したときに読み込まれる関数
         // スピードアップをすべてくぐっていたらスピードボーナス
-        private async void CheckHitBoostBoadAsync()
+        private void CheckHitBoostBoad()
+        {
+            CheckHitBoostBoadAsync().Forget();
+        }
+        private async UniTaskVoid CheckHitBoostBoadAsync()
         {
             // ゲームが動いてない場合は終了
             if (!Owner.GetGameManager.IsMovingGame.Value) return;
 
             // スピード加速ボードにすべて振れられていない場合は終了
             if (SPEED_BOOST_SUCCESS_COUNT > _speedBoostCount) return;
-            
+
 
             // スピードを加速
             Owner.GetSpeedManager.AddSpeedAdd(ADD_SPEED_ADD_SUCCESS_SPECIAL);
